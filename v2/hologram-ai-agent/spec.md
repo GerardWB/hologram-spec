@@ -1,5 +1,49 @@
 # Hologram AI Agent spec v2
 
+## Product Positioning and Key blocks
+
+### Product positioning
+The Hologram Agent is not the LLM itself.
+
+It is a trusted control layer connected to one or more LLM runtimes selected by the Principal or operator.
+
+It manages:
+- identity;
+- context;
+- memory;
+- rights;
+- tool access;
+- business execution policies;
+- external actor interactions.
+
+The LLM runtime performs reasoning and generation, but does not own identity, rights, trust policies or business authority.
+
+### Key Blocks
+
+Proposed key blocks:
+- Hologram Agent
+- User Front / Client UI
+- LLM Runtime
+- Principal
+- Actor
+- Backing Identity
+- Long-term Store
+- Working Memory
+- Context Window
+- Semantic Index
+- Tools / MCP
+- External Business Actors
+
+Note: The term “Agent” is currently too broad.
+Keep in mind that the spec refers to the Hologram Agent, and not to the LLM runtime, or the user-facing front (unless it is explicitly mentionned).
+
+### Note on the user front block
+
+A User Front is only an interaction interface. It does not itself hold business authority. Business rights are attached to the Principal, its backing identity, and the role / delegation policy defined in the agent-pack.
+
+For an organisation, multiple users may interact through different fronts while the Hologram Agent enforces the organisation’s rights and delegation rules.
+
+
 ## Features
 
 ### Core & runtime
@@ -430,6 +474,44 @@ stateDiagram-v2
 ### MEM — Memory
 
 *Scope:* the canonical memory unit, how attachments are stored text-first, the authoritative vs. derived memory tiers, how the context window and retrieval work, and retrieval-augmented generation over documents.
+
+The agent MUST maintain a data classification and lifecycle matrix for all memory-related objects.
+
+##### Authoritative data
+
+| Data object | Purpose | Persistence | Export / erasure | Sent to LLM |
+|---|---|---|---|---|
+| `MessageEntry` | Canonical record of anything said or done | Persistent | Exportable and erasable, subject to lifecycle rules | Yes, if selected |
+| Long-term store | Source of truth for conversation and action history | Persistent | Exportable and erasable | No direct; entries may be selected |
+| Working memory | LLM-curated notes influencing future context | To be explicitly defined | To be explicitly defined | Yes, if selected |
+| Tool-call arguments | Inputs sent to external tools | Persistent | Exportable and erasable subject to audit policy | May be shown to LLM if needed |
+| Tool-call results | Outputs returned by external tools | Persistent | Exportable and erasable subject to audit policy | Yes, if needed |
+| Approval records | Human approval, refusal or elevation decision | Persistent | Exportable; erasure subject to audit policy | Usually no |
+
+##### Derived or rebuildable data
+
+| Data object | Purpose | Persistence | Export / erasure | Sent to LLM |
+|---|---|---|---|---|
+| Context window | Token-bounded prompt context sent to the model | Volatile / rebuilt each turn | Not directly exportable; source objects are exportable | Yes |
+| Semantic index / embeddings | Similarity search and retrieval | Persistent but rebuildable | Treated as personal data; hard-delete on erasure | No |
+| Window summaries | Temporary compression of context | Transient | Regenerated after source erasure | Yes, if included |
+| RAG chunks | Searchable document passages | Persistent while source is active | Exportable if source-backed; erasable with source | Yes, if retrieved |
+| LLM request payload | Prompt, selected context and allowed tools | Usually transient | Exportable only if logged; erasable by retention policy | N/A |
+| LLM response payload | Model output before persistence | Transient until converted to `MessageEntry` | Exportable once persisted as `MessageEntry` | N/A |
+
+##### Secret or external objects
+
+| Data object | Purpose | Persistence | Export / erasure | Sent to LLM |
+|---|---|---|---|---|
+| Object store binary | Encrypted raw media / file object | Persistent while referenced | Exportable if in scope; erasable unless legal hold | No |
+| Credential summary | Minimal record of credential presentation | Persistent according to policy | Exportable and erasable | Summary only if needed |
+| MCP / tool credentials | Encrypted credentials used for tool execution | Persistent while active | No clear export by default; revocable / destroyable | No |
+
+##### Requirements
+
+- `[MEM-DATA-001]` The agent MUST maintain a documented data classification matrix covering all memory-related objects.
+- `[MEM-DATA-002]` Any object that can contain personal data, inferred preferences, behavioral patterns or user-specific conclusions MUST be covered by export and erasure rules, even if it is derived or not directly editable by the Principal.
+- `[MEM-DATA-003]` Any object sent to an external LLM provider MUST be traceable to its source objects and governed by the provider policy.
 
 ```mermaid
 flowchart TB
