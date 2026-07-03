@@ -1,48 +1,100 @@
 # Hologram AI Agent spec v2
 
-## Product Positioning and Key blocks
+## Product Positioning and Key Blocks
 
 ### Product positioning
-The Hologram Agent is not the LLM itself.
 
-It is a trusted control layer connected to one or more LLM runtimes selected by the Principal or operator.
+The Hologram AI Agent is not the LLM itself.
 
-It manages:
-- identity;
-- context;
-- memory;
-- rights;
+It is a white-label personal agent and attestation wallet application that can be deployed by an organization, ecosystem operator, service provider, employer, institution, or individual-facing platform for its end users.
+
+Each end user receives a personal verifiable agent interface combining:
+
+- secure messaging;
+- AI assistance;
+- a wallet of attestations and verifiable credentials;
+- policy-governed rights and capability presentation;
+- trusted interaction with professional agents, organizational services, and third-party Verifiable Services.
+
+The Hologram AI Agent enables a Principal to converse with other agents and services, selectively present attestations, prove rights or capabilities, request actions, receive challenges, obtain approvals, and execute trusted interactions under the policies defined by the agent-pack.
+
+The LLM runtime performs reasoning and generation. It does not own identity, rights, credentials, memory, authorization, trust policies, business authority, retention, erasure, audit, or legal compliance decisions.
+
+The Hologram AI Agent is the governed control layer that manages:
+
+- Principal identity;
+- attestation and credential presentation;
+- conversation context;
+- counterparty context;
+- memory and retrieval;
+- rights and delegation;
 - tool access;
 - business execution policies;
-- external actor interactions.
+- human approvals;
+- authentication challenges;
+- audit evidence;
+- privacy lifecycle;
+- jurisdiction-specific compliance.
 
-The LLM runtime performs reasoning and generation, but does not own identity, rights, trust policies or business authority.
+### Core product model
+
+The core product model is:
+
+- a white-label deployment operated by an organization, ecosystem, service provider, or platform;
+- one personal Hologram experience per end user or Principal;
+- secure messaging over DIDComm, AG-UI, and A2A;
+- a capability channel for trust-bound operations;
+- a wallet of attestations and verifiable credentials;
+- selective disclosure of rights, roles, mandates, permissions, or capabilities;
+- policy-governed execution of tools and third-party actions;
+- auditable memory and action history;
+- privacy-preserving data lifecycle;
+- tamper-evident proof without making personal data immutable forever.
 
 ### Key Blocks
 
-Proposed key blocks:
-- Hologram Agent
-- User Front / Client UI
-- LLM Runtime
-- Principal
-- Actor
-- Backing Identity
-- Long-term Store
-- Working Memory
-- Context Window
-- Semantic Index
-- Tools / MCP
-- External Business Actors
+The main blocks are:
 
-Note: The term “Agent” is currently too broad.
-Keep in mind that the spec refers to the Hologram Agent, and not to the LLM runtime, or the user-facing front (unless it is explicitly mentionned).
+- Hologram AI Agent;
+- User Front / Client UI;
+- LLM Runtime;
+- Principal;
+- Actor Identity;
+- Backing Identity;
+- Attestation Wallet;
+- Counterparty Agent / Verifiable Service;
+- Conversation Session;
+- Capability Channel;
+- Long-term Store;
+- Working Memory;
+- Context Window;
+- Semantic Index;
+- Policy Engine;
+- Tools / MCP;
+- External Business Actors;
+- Audit and Evidence Layer;
+- Verana Ledger Anchoring.
 
-### Note on the user front block
+### Terminology note
 
-A User Front is only an interaction interface. It does not itself hold business authority. Business rights are attached to the Principal, its backing identity, and the role / delegation policy defined in the agent-pack.
+In this specification, unless explicitly stated otherwise, “Agent” means the Hologram AI Agent: the governed control layer acting as a Verifiable Service.
 
-For an organisation, multiple users may interact through different fronts while the Hologram Agent enforces the organisation’s rights and delegation rules.
+It does not mean:
 
+- the LLM runtime;
+- the user-facing front-end;
+- a generic chatbot;
+- a third-party AI agent;
+- the human user;
+- a single model invocation.
+
+### Note on the User Front block
+
+A User Front is an interaction interface. It does not itself hold business authority.
+
+Business rights are attached to the Principal, its verified credentials, its backing identity, and the role / delegation policy defined in the agent-pack.
+
+For an organization, multiple users may interact through different fronts while the Hologram AI Agent enforces the organization’s rights, delegation rules, jurisdiction profile, and compliance policies.
 
 ## Features
 
@@ -91,6 +143,14 @@ For an organisation, multiple users may interact through different fronts while 
 - Crypto-erasure with lineage cascade: per-entry keys; erasure cascades to derivatives while the audit chain is preserved.
 - Retention defaults, legal hold, data minimization, and a memory-access audit log.
 
+### Governance, jurisdiction & compliance
+
+- Jurisdiction profile: every agent-pack declares applicable jurisdictions, regulations, sector rules, data-residency constraints, transfer restrictions, legal role mapping, and AI governance requirements.
+- Context separation: conversation context, principal context, counterparty context, capability context, governance context, and LLM runtime context are distinct and governed separately.
+- Policy engine: authorization, retrieval, tool execution, credential presentation, approvals, auth challenges, erasure, retention, and ledger anchoring are decided by deterministic policy, not by the LLM.
+- Legal role mapping: deployments declare data-controller / processor roles and AI Act provider / deployer roles for the operator, platform, model providers, tool providers, credential issuers, and relying parties.
+- AI Act readiness: deployments can declare AI risk classification, human oversight, event logging, model/prompt/tool versioning, technical documentation, monitoring, and incident traceability.
+
 ### Access control (RBAC)
 
 - Per-role tool access: ALLOW / DENY / APPROVAL / REQUESTABLE.
@@ -137,6 +197,11 @@ For an organisation, multiple users may interact through different fronts while 
 ## Specification
 
 *This section is normative.*
+
+This specification describes the target requirements for a governable, jurisdiction-aware, privacy-preserving, AI Act-ready Hologram AI Agent.
+
+Not every requirement must be delivered in the same product phase. Delivery phases may prioritize a subset of requirements. However, the target model MUST remain explicit so that implementation choices do not contradict future GDPR, AI Act, security, audit, erasure, jurisdiction, or governance requirements.
+
 
 This section is the complete, self-contained requirements for the Hologram AI Agent. It depends on no other document. Each requirement has a stable identifier `[AREA-TOPIC-NNN]`, states exactly one rule using **MUST / SHOULD / MAY** (RFC 2119 keywords), and carries a `Verify:` line giving an objective acceptance check. Each requirement is intended to become one GitHub issue. The subsections mirror the Features above. All terms in **bold** are defined in `### Definitions`. Identifiers are stable: once assigned, a number is never reused or renumbered.
 
@@ -200,6 +265,38 @@ This section is the complete, self-contained requirements for the Hologram AI Ag
 - **Approval** — a human-in-the-loop sign-off required before a sensitive action runs or an **elevation** is granted.
 - **Auth challenge** — a system-enforced identity check (device biometric/PIN, face-match with liveness, or NFC document read) routed to DIDComm.
 
+#### Product, context and compliance
+
+- **Personal Hologram Agent** — the user-facing deployment of the Hologram AI Agent for one Principal, combining messaging, AI assistance, attestations, credentials, memory, approvals, and policy-governed capabilities.
+
+- **White-label operator** — the organization, ecosystem, platform, service provider, employer, institution, or individual-facing entity deploying the Hologram AI Agent under its own brand, rules, policies, and jurisdiction profile.
+
+- **End user** — the natural person or professional user interacting with a Personal Hologram Agent through a User Front or Verifiable User Agent.
+
+- **Counterparty Agent** — another AI agent, service, Verifiable Service, professional agent, organizational service, or third-party actor with which the Hologram AI Agent interacts.
+
+- **Attestation Wallet** — the set of credentials, attestations, proofs, mandates, permissions, role facts, and capability claims available to the Principal and selectively presentable to a counterparty.
+
+- **Conversation context** — the state and history of one conversation session between a Principal and a counterparty or channel.
+
+- **Principal context** — the durable state attached to a Principal, including identity, credentials, preferences, working memory, sessions, role assignments, and capability channel.
+
+- **Counterparty context** — the verified identity, backing identity, trust status, role, relationship, jurisdiction, and policy-relevant attributes of the peer with which the agent is interacting.
+
+- **Capability context** — the action-specific state describing what the Principal wants to prove, request, approve, sign, execute, delegate, or access.
+
+- **Governance context** — the applicable policy state, including roles, jurisdiction profile, legal roles, data categories, lawful bases, retention policies, AI Act profile, approval rules, auth-challenge rules, and audit requirements.
+
+- **LLM runtime context** — the transient prompt context sent to an LLM for one turn. It is derived, bounded, minimized, and rebuilt from authorized sources. It is not an authoritative store.
+
+- **Jurisdiction profile** — the agent-pack configuration identifying applicable jurisdictions, regulations, sector rules, data residency constraints, transfer restrictions, legal role mapping, retention rules, and AI governance requirements.
+
+- **Legal role mapping** — the configuration mapping parties involved in the deployment to legal and regulatory roles such as data controller, data processor, joint controller, AI Act provider, AI Act deployer, tool provider, model provider, credential issuer, relying party, and auditor.
+
+- **Policy Engine** — the deterministic enforcement component that decides whether an action, retrieval, credential presentation, tool call, approval, auth challenge, erasure, retention, or ledger anchoring operation is allowed, denied, escalated, or blocked.
+
+- **AI Governance Profile** — the deployment-specific profile describing the AI system’s intended purpose, risk classification, model/provider configuration, human oversight model, logging requirements, documentation requirements, monitoring requirements, and incident handling requirements.
+
 ### CORE — Core & runtime
 
 *Scope:* how every message flows through the agent, in both directions, and how the agent loads and versions its configuration. The core handles only abstract objects — **Principal**, **Conversation session**, **MessageEntry**, and **capability events**. DIDComm, AG-UI, and A2A are interchangeable transport adapters.
@@ -245,6 +342,15 @@ flowchart LR
   *Verify:* a manifest with a wrong type or unknown required field is rejected with an error naming the field.
 - **[CORE-PACK-004]** The agent-pack manifest MUST declare a schema version.
   *Verify:* a manifest missing the version, or declaring an unsupported version, is rejected.
+
+- **[CORE-PACK-005]** The agent-pack manifest MUST declare governance configuration, including jurisdiction profiles, legal role mapping, AI governance profiles, data categories, lawful bases, retention policies, transfer policies, and policy-engine rules.
+  *Verify:* an agent-pack missing mandatory governance configuration is rejected or explicitly marked as non-governed.
+- **[CORE-PACK-006]** The agent-pack manifest MUST support multiple deployment contexts, each with its own operator, jurisdiction profile, legal role mapping, AI governance profile, and policy set.
+  *Verify:* the same agent-pack can define at least two deployment contexts with different jurisdiction and retention rules.
+- **[CORE-PACK-007]** The agent-pack manifest MUST declare whether the deployment is intended for employees, individual consumers, professional users, public-sector users, healthcare users, financial-services users, or another configured population.
+  *Verify:* the served user population is available to the Policy Engine and audit log.
+- **[CORE-PACK-008]** The agent-pack manifest MUST declare whether the agent is allowed to interact with external Counterparty Agents and under which trust, credential, jurisdiction, and data-sharing rules.
+  *Verify:* a counterparty interaction without a permitted counterparty policy is denied by default.
 
 #### CORE-PROMPT — System-prompt add-on
 
@@ -471,6 +577,76 @@ stateDiagram-v2
 - **[IDENT-FED-003]** The agent MUST NOT host any partner's data or run any partner's tenant; it MUST only recognize partner identities.
   *Verify:* the deployment contains no partner-owned data store or tenant.
 
+### GOV — Governance, context, jurisdiction and compliance
+
+*Scope:* how the Hologram AI Agent is governed as a white-label personal agent and attestation wallet, how contexts are separated, how jurisdiction and legal roles are declared, and how deterministic policy enforces GDPR, AI Act, security, audit, and business rules before execution.
+
+The LLM reasons.
+The Policy Engine decides.
+The audit layer proves.
+The jurisdiction profile determines which rules apply.
+
+The LLM MUST NOT be the authority for identity, access control, credential validity, purpose, lawful basis, jurisdiction, data retention, erasure, approval, auth challenge, ledger anchoring, or legal compliance.
+
+#### GOV-PROD — Product and deployment model
+
+- **[GOV-PROD-001]** The specification MUST treat the Hologram AI Agent as a white-label personal agent and attestation wallet application, not as a standalone LLM or generic chatbot.
+  *Verify:* the agent-pack and runtime model distinguish the Hologram AI Agent from the LLM runtime and from the User Front.
+- **[GOV-PROD-002]** A deployment MUST identify its white-label operator and the scope of end users or Principals it serves.
+  *Verify:* an agent-pack without an operator identity and served-principal scope is rejected or explicitly marked as non-governed.
+- **[GOV-PROD-003]** The agent MUST support interaction with Counterparty Agents and Verifiable Services while preserving the Principal’s context, credentials, and policy boundaries.
+  *Verify:* a conversation with a counterparty records the counterparty identity, session, trust status, and applicable policies.
+- **[GOV-PROD-004]** Credentials and attestations MUST be treated as wallet-held capabilities that may be selectively presented according to policy, counterparty, purpose, and user approval.
+  *Verify:* a counterparty receives only the credential presentation explicitly selected and authorized for that context.
+
+#### GOV-CTX — Context model
+
+- **[GOV-CTX-001]** The agent MUST distinguish conversation context, principal context, counterparty context, capability context, governance context, and LLM runtime context.
+  *Verify:* every retrieval, tool execution, credential presentation, approval, and auth challenge declares which context types it uses.
+- **[GOV-CTX-002]** A conversation session MUST be scoped to one Principal and one conversation context, and SHOULD record the counterparty context when a counterparty is known.
+  *Verify:* a session record identifies the Principal, channel, session id, and counterparty identity or records that no counterparty is bound.
+- **[GOV-CTX-003]** The LLM runtime context MUST be a derived runtime view, rebuilt each turn from authorized entries, credential summaries, preferences, working memory, policies, and active session state.
+  *Verify:* deleting the runtime context window loses no authoritative data and the next turn rebuilds it from authorized sources.
+- **[GOV-CTX-004]** The agent MUST NOT retrieve entries from another session unless cross-session retrieval is authorized by role, visibility, lifecycle state, Principal identity, backing identity, purpose policy where applicable, and counterparty context.
+  *Verify:* a test session cannot access another session’s entries unless all configured cross-session predicates are satisfied.
+- **[GOV-CTX-005]** Context from one counterparty interaction MUST NOT be reused in another counterparty interaction unless policy explicitly allows it and the access is logged.
+  *Verify:* data from a healthcare, HR, banking, or employer counterparty context is not injected into another counterparty context by default.
+
+#### GOV-JUR — Jurisdiction profile
+
+- **[GOV-JUR-001]** The agent-pack MUST declare a jurisdiction profile for each deployment or deployment context.
+  *Verify:* an agent-pack without a jurisdiction profile is rejected or explicitly marked as non-governed.
+- **[GOV-JUR-002]** A jurisdiction profile MUST identify the primary jurisdiction, applicable regulations, sector-specific rules, data-residency requirements, data-transfer restrictions, retention requirements, and audit constraints.
+  *Verify:* the profile exposes all listed fields and validation rejects missing mandatory fields.
+- **[GOV-JUR-003]** Every sensitive action MUST be evaluated against the active jurisdiction profile before execution.
+  *Verify:* changing the jurisdiction profile changes the policy decision for at least one jurisdiction-sensitive test action.
+- **[GOV-JUR-004]** The agent MUST support multiple deployment contexts with different jurisdiction profiles when the same Hologram AI Agent is deployed for multiple markets, sectors, operators, or user populations.
+  *Verify:* two contexts can apply different retention, transfer, approval, and AI governance rules without code changes.
+
+#### GOV-LEGAL — Legal role mapping
+
+- **[GOV-LEGAL-001]** The agent-pack MUST define the legal role mapping for the operator, platform, model provider, tool provider, credential issuer, relying party, and auditor where applicable.
+  *Verify:* every processing event can be attributed to configured legal roles.
+- **[GOV-LEGAL-002]** The legal role mapping MUST support at least: `data_controller`, `data_processor`, `joint_controller`, `ai_act_provider`, `ai_act_deployer`, `model_provider`, `tool_provider`, `credential_issuer`, `relying_party`, and `auditor`.
+  *Verify:* validation accepts these role values and rejects unknown mandatory role values.
+- **[GOV-LEGAL-003]** The agent MUST record which party is acting as controller or processor for each personal-data processing context.
+  *Verify:* a personal-data processing event without controller/processor attribution is rejected or marked incomplete for compliance.
+- **[GOV-LEGAL-004]** The agent MUST record whether the white-label operator acts as AI Act deployer, AI Act provider, or both for each deployment context.
+  *Verify:* the AI governance profile exposes provider/deployer role attribution.
+
+#### GOV-POL — Policy Engine
+
+- **[GOV-POL-001]** The agent MUST include a deterministic Policy Engine that evaluates retrieval, credential presentation, tool access, approvals, auth challenges, erasure, retention, and ledger anchoring before execution.
+  *Verify:* each governed operation calls the Policy Engine before execution.
+- **[GOV-POL-002]** The LLM MUST NOT be able to override or self-declare policy decisions.
+  *Verify:* policy decisions are absent from the prompt and enforced outside the model response.
+- **[GOV-POL-003]** The Policy Engine MUST return an explicit decision of `allow`, `deny`, `approval_required`, `auth_challenge_required`, `elevation_required`, `redact`, `degrade`, or `block`.
+  *Verify:* each governed operation receives and logs exactly one policy decision.
+- **[GOV-POL-004]** Every Policy Engine decision MUST be logged with the Principal, role, session, counterparty context, jurisdiction profile, data category, purpose, action type, decision, and timestamp.
+  *Verify:* each policy decision produces a complete audit record.
+- **[GOV-POL-005]** Policy evaluation MUST fail closed by default when required context, jurisdiction, credential, role, or legal metadata is missing.
+  *Verify:* removing mandatory governance metadata causes sensitive actions to be denied or blocked.
+
 ### MEM — Memory
 
 *Scope:* the canonical memory unit, how attachments are stored text-first, the authoritative vs. derived memory tiers, how the context window and retrieval work, and retrieval-augmented generation over documents.
@@ -547,12 +723,12 @@ flowchart TB
   *Verify:* a voice note yields an entry with a transcription and `sourceType` `voice`.
 - **[MEM-ATT-003]** For an image attachment, the agent MUST store a textual description as the text representation, computed once and reused on later references.
   *Verify:* an image description is generated once; subsequent references do not recompute it.
-- **[MEM-ATT-004]** For each stored object, the agent MUST persist the object-store reference (`bucket/key`), the per-object AES key, and a SHA-256 digest of the object.
-  *Verify:* a media attachment record contains a reference, an AES key, and a digest.
+- **[MEM-ATT-004]** For each stored object, the agent MUST persist the object-store reference (`bucket/key`), a SHA-256 digest of the encrypted object, and either a KMS/Vault/HSM key reference or a wrapped data-encryption key; raw encryption keys MUST NOT be stored in PostgreSQL or object metadata.
+  *Verify:* a media attachment record contains a reference, a digest, and a key reference or wrapped key, but no raw AES key.
 - **[MEM-ATT-005]** The agent MUST generate presigned URLs on demand for stored objects and MUST NOT persist the URLs.
   *Verify:* object access uses a freshly generated presigned URL, not a stored one.
-- **[MEM-ATT-006]** The per-object AES key MUST be persisted alongside metadata for admin/audit decryption and MUST NOT be placed in the LLM context.
-  *Verify:* the AES key never appears in any prompt or context window sent to the model.
+- **[MEM-ATT-006]** Object decryption keys MUST be protected by a KMS, Vault, HSM, or equivalent key-management mechanism, and MUST NOT be placed in the LLM context, logs, prompts, MessageEntries, working memory, or unencrypted metadata.
+  *Verify:* database inspection and prompt traces show no raw decryption key, and authorized decryption requires the configured key-management component.
 - **[MEM-ATT-007]** For a credential presentation, the agent MUST store a summary (credential id, type, issuer DID, digest) and MUST NOT store the full presentation document in memory.
   *Verify:* a credential-presentation entry contains a summary and digest, not the full presentation.
 
@@ -562,8 +738,8 @@ flowchart TB
   *Verify:* the only sources of truth are the long-term store and working memory.
 - **[MEM-TIER-002]** The agent MUST treat the context window, the semantic index, and window summaries as derived and rebuildable from the authoritative stores.
   *Verify:* discarding and rebuilding any derived store reproduces it from authoritative data.
-- **[MEM-TIER-003]** Working memory MUST be writable only by the LLM; the principal MUST NOT be able to read or edit it.
-  *Verify:* a principal request to read or modify working memory is denied.
+- **[MEM-TIER-003]** Working memory MUST be writable only by the LLM or authorized system processes, but working-memory entries that contain personal data, inferred preferences, behavioral patterns, or user-specific conclusions MUST be covered by controlled access, explanation, correction, export, restriction, and erasure workflows.
+  *Verify:* a Principal cannot directly edit internal working-memory records, but can trigger a privacy workflow that exports, explains, corrects, restricts, or erases personal-data-bearing working-memory entries according to policy.
 - **[MEM-TIER-004]** Window summaries MUST be transient compressions of the active window only and MUST NOT be persisted as independent authoritative records.
   *Verify:* a window summary is regenerated on demand and is not stored as a standalone record.
 - **[MEM-TIER-005]** Working memory MUST be durable and authoritative while summarization MUST be mechanical and discardable.
@@ -619,6 +795,18 @@ flowchart TD
   *Verify:* org-shared is visible to home-backed Principals only; partner-shared is visible to the matching partner's Principals only.
 - **[PRIV-CLS-006]** The org/partner visibility comparison MUST be a single equality on backing identity, applied identically whether the matched identity is home or a recognized partner.
   *Verify:* both tiers resolve through one equality-on-backing-identity code path.
+- **[PRIV-CLS-007]** Every entry that may contain personal data MUST carry compliance metadata including data category, data-subject scope, lawful basis, processing purpose, retention policy, erasure eligibility, controller/processor attribution, jurisdiction profile id, and whether special-category data may be present.
+  *Verify:* persisting a personal-data entry without complete compliance metadata is rejected.
+- **[PRIV-CLS-008]** Data category MUST support at least: `non_personal`, `personal_data`, `special_category_data`, `credential_data`, `biometric_data`, `financial_data`, `health_data`, `employment_data`, `minor_data`, `system_security_data`, and `audit_metadata`.
+  *Verify:* entries with unsupported data categories are rejected.
+- **[PRIV-CLS-009]** Special-category data handling MUST be explicitly declared by policy and MUST default to `not_allowed` unless enabled for a specific deployment context, purpose, role, and jurisdiction profile.
+  *Verify:* an entry classified as special-category data is rejected unless a policy explicitly allows it.
+- **[PRIV-CLS-010]** Credential payloads, biometric captures, NFC document reads, face-match reference material, and auth-challenge evidence MUST be classified separately from ordinary conversation text.
+  *Verify:* each such object is persisted with a specific data category and retention policy.
+- **[PRIV-CLS-011]** Every entry MUST distinguish user-provided data, counterparty-provided data, system-generated data, LLM-generated data, inferred data, and derived data.
+  *Verify:* an entry records its data origin and derived entries link back to source entries.
+- **[PRIV-CLS-012]** The agent MUST mark whether an entry is allowed to be sent to an external LLM provider, and under which provider policy, jurisdiction profile, and minimization constraints.
+  *Verify:* an entry disallowed for external LLM processing never appears in an external model request payload.
 
 #### PRIV-SCOPE — Authorize before retrieval
 
@@ -681,8 +869,20 @@ flowchart TD
   *Verify:* a task satisfied by a summary does not pull raw entries.
 - **[PRIV-RETN-005]** Embeddings MUST be treated as personal data subject to the full lifecycle (classification, minimization, erasure).
   *Verify:* embeddings are scoped and erased like the entries they derive from.
-- **[PRIV-RETN-006]** Each entry MUST carry an operator-asserted lawful basis of `consent`, `contract`, or `legitimate-interest`.
-  *Verify:* an entry without a lawful basis is rejected.
+- **[PRIV-RETN-006]** Each personal-data entry MUST carry an operator-asserted lawful basis supporting all GDPR Article 6 bases: `consent`, `contract`, `legal_obligation`, `vital_interests`, `public_task`, and `legitimate_interests`.
+  *Verify:* an EU personal-data entry without a lawful basis, or with an unsupported lawful basis, is rejected.
+- **[PRIV-RETN-007]** The agent MUST support a privacy export workflow covering MessageEntries, credential summaries, media references, tool-call arguments, tool-call results, approval records, working-memory-derived personal data, preferences, access logs, and derived personal-data artifacts where exportable.
+  *Verify:* a Principal can request an export and receive all exportable personal-data-bearing objects linked to that Principal.
+- **[PRIV-RETN-008]** The agent MUST support a rectification workflow for inaccurate personal data, including working-memory-derived conclusions and inferred preferences.
+  *Verify:* a correction request updates or supersedes inaccurate personal-data-bearing records and records the correction event.
+- **[PRIV-RETN-009]** The agent MUST support a restriction workflow that prevents selected personal-data-bearing entries from being used for retrieval, LLM context, tool execution, or credential presentation while preserving audit metadata.
+  *Verify:* a restricted entry is excluded from normal retrieval and LLM context but remains visible to authorized audit flows.
+- **[PRIV-RETN-010]** The agent MUST support an objection workflow where the Principal can object to processing under configured lawful bases, and the Policy Engine MUST decide whether processing continues, is restricted, or is stopped.
+  *Verify:* an objection produces a policy decision and subsequent processing follows that decision.
+- **[PRIV-RETN-011]** The agent MUST support a portability workflow for personal data that the operator determines to be portable under the applicable jurisdiction profile.
+  *Verify:* portable data can be exported in a structured, commonly used, machine-readable format.
+- **[PRIV-RETN-012]** Every data-subject-rights workflow MUST record the request, requester identity, scope, decision, legal basis for acceptance or refusal, timestamp, and resulting lifecycle actions.
+  *Verify:* every access, rectification, erasure, restriction, portability, or objection request produces an auditable record.
 
 ### RBAC — Access control
 
@@ -717,8 +917,8 @@ flowchart TD
   *Verify:* a role's cross-session reads match the configured matrix.
 - **[RBAC-XSESS-002]** The `auditor` role MUST have read-only access to all stored data including the audit log, and MUST NOT be able to write.
   *Verify:* an auditor reads everything and every write attempt is denied.
-- **[RBAC-XSESS-003]** An audit/admin role with decryption privilege MUST be able to decrypt media via the persisted AES keys, independent of what the LLM may access.
-  *Verify:* an authorized auditor decrypts a stored object that the LLM never sees in plaintext.
+- **[RBAC-XSESS-003]** An audit/admin role with decryption privilege MUST be able to request media decryption only through an authorized audit flow using the configured KMS, Vault, HSM, or equivalent key-management mechanism; raw decryption keys MUST NOT be exposed to the auditor, admin, LLM, or application logs.
+  *Verify:* an authorized auditor can decrypt a stored object through the audit flow, while raw keys remain inaccessible and every decryption request is logged.
 - **[RBAC-XSESS-004]** `principal-private` cross-session reads MUST key on the full (actor identity, backing identity) pair; `organization-shared` and `partner-shared` MUST key on backing identity alone.
   *Verify:* a principal-private entry follows one actor across sessions, while org/partner entries are shared across all actors of the backing identity.
 - **[RBAC-XSESS-005]** Role names, capabilities, and access policies MUST be fully configurable in the agent-pack, supporting unlimited custom roles.
@@ -920,6 +1120,68 @@ stateDiagram-v2
 - **[LLM-MODE-003]** The agent MUST support gateway providers that add cross-provider fallback and cost/latency routing through the OpenAI-compatible tier.
   *Verify:* a configured gateway routes across providers per its policy.
 
+### AIGOV — AI governance and EU AI Act readiness
+
+*Scope:* how the agent records AI-system configuration, risk classification, human oversight, model/provider usage, prompt/tool versions, logging, documentation, monitoring, and incident traceability so that deployments can support EU AI Act governance where applicable.
+
+This section does not classify every deployment as high-risk. It requires the agent to carry the metadata and controls needed to support risk-based classification and AI Act-ready operation when required by the deployment context.
+
+#### AIGOV-PROF — AI Governance Profile
+
+- **[AIGOV-PROF-001]** The agent-pack MUST declare an AI Governance Profile for each deployment context.
+  *Verify:* a deployment context without an AI Governance Profile is rejected or explicitly marked as not assessed for AI governance.
+- **[AIGOV-PROF-002]** The AI Governance Profile MUST declare intended purpose, served user population, deployment domain, operator role, AI Act provider/deployer attribution, model providers, tool providers, and whether high-risk assessment is required.
+  *Verify:* all required profile fields are present and available to the Policy Engine and audit layer.
+- **[AIGOV-PROF-003]** The AI Governance Profile MUST support risk classification values: `not_assessed`, `out_of_scope`, `minimal_risk`, `limited_risk`, `high_risk`, and `prohibited`.
+  *Verify:* unsupported risk classification values are rejected.
+- **[AIGOV-PROF-004]** If the AI Governance Profile is `high_risk`, the agent MUST enable high-risk operating controls for logging, human oversight, documentation, monitoring, and incident traceability.
+  *Verify:* setting risk classification to `high_risk` enables the required controls and prevents startup if mandatory controls are missing.
+- **[AIGOV-PROF-005]** If the AI Governance Profile is `prohibited`, the agent MUST refuse to operate in that deployment context.
+  *Verify:* a prohibited deployment context cannot start or execute actions.
+
+#### AIGOV-VERS — Model, prompt and tool versioning
+
+- **[AIGOV-VERS-001]** Every LLM invocation MUST record the model provider, model identifier, model version where available, configuration parameters, prompt-add-on version, agent-pack version, enabled tool list, and retrieval scope id.
+  *Verify:* each model call has a complete AI invocation record.
+- **[AIGOV-VERS-002]** Every tool exposed to the LLM MUST have a versioned definition, including name, description, parameters, endpoint or MCP origin, access policy, data categories handled, and risk level.
+  *Verify:* changing a tool definition changes its version and prior executions remain linked to the previous version.
+- **[AIGOV-VERS-003]** Every system prompt, persona prompt, policy prompt add-on, and model instruction injected into the LLM request MUST be versioned and traceable.
+  *Verify:* a generated answer can be traced back to the exact prompt components used.
+
+#### AIGOV-LOG — AI event logging
+
+- **[AIGOV-LOG-001]** The agent MUST maintain AI event logs for model calls, retrieval events, tool calls, policy decisions, approvals, refusals, auth challenges, credential presentations, and generated outputs.
+  *Verify:* a complete timeline can be reconstructed for an AI-assisted action.
+- **[AIGOV-LOG-002]** AI event logs MUST support traceability from final output back to source messages, retrieved entries, credentials, tool calls, policy decisions, model invocation, and human approvals.
+  *Verify:* an auditor can reconstruct why a tool was executed or why an answer was produced.
+- **[AIGOV-LOG-003]** AI event logs MUST be retained according to the AI Governance Profile, jurisdiction profile, and data lifecycle policies.
+  *Verify:* log retention differs correctly across deployment contexts.
+
+#### AIGOV-HUMAN — Human oversight
+
+- **[AIGOV-HUMAN-001]** The agent MUST support human oversight controls for actions classified as sensitive, high-impact, high-risk, or requiring human validation under the AI Governance Profile.
+  *Verify:* a high-risk action cannot execute without the configured oversight control.
+- **[AIGOV-HUMAN-002]** Human oversight roles MUST be assigned to natural persons with configured competence, authority, and role eligibility.
+  *Verify:* an approver lacking the required oversight role cannot approve the action.
+- **[AIGOV-HUMAN-003]** The agent MUST allow authorized human overseers to approve, refuse, override, interrupt, or stop a governed action where configured.
+  *Verify:* an overseer can stop or refuse a pending governed action and the refusal is enforced.
+
+#### AIGOV-DOC — Documentation and instructions for use
+
+- **[AIGOV-DOC-001]** The agent MUST be able to produce a deployment evidence package containing agent-pack version, AI Governance Profile, jurisdiction profile, legal role mapping, enabled models, enabled tools, data categories, retention policies, human oversight rules, and audit-log configuration.
+  *Verify:* the evidence package can be generated for a deployment context.
+- **[AIGOV-DOC-002]** The agent MUST expose instructions-for-use metadata for deployers, including intended purpose, limitations, required human oversight, prohibited uses, data input constraints, logging behavior, and incident escalation.
+  *Verify:* instructions-for-use metadata is generated from the AI Governance Profile and agent-pack.
+
+#### AIGOV-MON — Monitoring and incidents
+
+- **[AIGOV-MON-001]** The agent MUST support runtime monitoring of policy denials, failed auth challenges, refused approvals, credential revocation failures, tool failures, anomalous tool usage, model/provider errors, and high-risk action outcomes.
+  *Verify:* monitoring metrics are emitted for each listed event class.
+- **[AIGOV-MON-002]** The agent MUST support incident records for events that may affect safety, fundamental rights, data protection, security, or compliance.
+  *Verify:* an incident can be opened from a policy decision, tool failure, auth failure, data breach signal, or overseer report.
+- **[AIGOV-MON-003]** Incident records MUST link to the relevant Principal, session, counterparty context, policy decision, tool call, model invocation, affected data categories, and remediation status.
+  *Verify:* an incident can be traced back to all relevant runtime evidence.
+
 ### INTEG — Integrity
 
 *Scope:* making historized data tamper-evident through reference digests and a verifiable chain anchored to the Verana ledger.
@@ -950,6 +1212,14 @@ flowchart LR
   *Verify:* changing the cadence changes anchoring frequency with no code change.
 - **[INTEG-ANCHOR-004]** Local digest-anchor records MUST be retained indefinitely for later verification.
   *Verify:* anchor records remain available for audit regardless of other tiers' retention.
+- **[INTEG-ANCHOR-005]** The Verana ledger MUST NOT store personal data, credential payloads, media content, conversation content, tool arguments, tool results, biometric material, auth-challenge evidence, or directly identifying information.
+  *Verify:* ledger transactions contain only non-reversible digests, timestamps, and non-identifying verification metadata.
+- **[INTEG-ANCHOR-006]** Ledger anchoring MUST preserve tamper-evidence without making personal data immutable forever.
+  *Verify:* after crypto-erasure, the plaintext is unrecoverable while the digest verification path remains valid.
+- **[INTEG-ANCHOR-007]** Batch digests anchored to the ledger MUST be computed over encrypted or canonicalized records in a way that does not require personal data to remain readable for future verification.
+  *Verify:* a verifier can prove integrity without accessing personal-data plaintext.
+- **[INTEG-ANCHOR-008]** Ledger metadata MUST be reviewed by the Policy Engine before anchoring to ensure that no personal data or linkable identifier is included.
+  *Verify:* an attempted anchor containing prohibited metadata is rejected before ledger submission.
 
 ### PLAT — Platform
 
@@ -975,4 +1245,66 @@ flowchart LR
 - **[PLAT-STATS-004]** Statistics ingestion MUST be non-blocking with respect to conversation handling.
   *Verify:* a statistics-backend outage does not block conversations.
 
+### TEST — Governance and compliance test matrix
 
+*Scope:* how the agent is tested as a governable, jurisdiction-aware, GDPR-ready, AI Act-ready, auditable personal agent and attestation wallet.
+
+The agent is fully testable only if every action can be replayed against:
+
+- Principal identity;
+- counterparty context;
+- active session;
+- credential state;
+- role and permissions;
+- jurisdiction profile;
+- legal role mapping;
+- data category;
+- lawful basis;
+- purpose;
+- retention policy;
+- erasure policy;
+- tool policy;
+- approval policy;
+- auth-challenge policy;
+- AI Governance Profile;
+- audit objective.
+
+#### TEST-GOV — Governance scenarios
+
+- **[TEST-GOV-001]** The test suite MUST include a jurisdiction-aware governance matrix covering at least EU/GDPR, non-EU, employee, consumer, professional, healthcare, financial-services, and public-sector deployment contexts.
+  *Verify:* the test suite contains at least one policy decision scenario for each listed context.
+- **[TEST-GOV-002]** The test suite MUST verify that the same agent-pack can apply different policies to different deployment contexts without code changes.
+  *Verify:* changing only the deployment context changes the applicable retention, approval, transfer, or AI governance rule.
+- **[TEST-GOV-003]** The test suite MUST verify that missing jurisdiction, legal role, lawful basis, or data category metadata causes sensitive processing to fail closed.
+  *Verify:* removing each mandatory governance metadata field causes the expected denial or block.
+
+#### TEST-GDPR — GDPR scenarios
+
+- **[TEST-GDPR-001]** The test suite MUST verify access, rectification, erasure, restriction, portability, and objection workflows for personal-data-bearing objects.
+  *Verify:* each data-subject-rights workflow produces an auditable decision and lifecycle action.
+- **[TEST-GDPR-002]** The test suite MUST verify that crypto-erasure makes plaintext unrecoverable while preserving non-personal audit metadata and digest verification.
+  *Verify:* erased plaintext cannot be recovered and the audit proof remains verifiable.
+- **[TEST-GDPR-003]** The test suite MUST verify that embeddings, summaries, working memory, tool-call arguments, tool-call results, and derived artifacts are removed, regenerated, restricted, or revised after erasure according to lineage policy.
+  *Verify:* no derived artifact exposes erased plaintext after the erasure workflow completes.
+- **[TEST-GDPR-004]** The test suite MUST verify that data from one counterparty context is not injected into another counterparty context unless cross-context access is explicitly authorized.
+  *Verify:* healthcare, employer, banking, and public-sector context fixtures remain isolated by default.
+
+#### TEST-AI — AI governance scenarios
+
+- **[TEST-AI-001]** The test suite MUST verify that AI Governance Profile risk classifications activate the expected controls.
+  *Verify:* `high_risk` enables high-risk logging, oversight, documentation, monitoring, and incident controls.
+- **[TEST-AI-002]** The test suite MUST verify that model, prompt, tool, retrieval, policy, approval, and credential state are traceable for every AI-assisted action.
+  *Verify:* an auditor can reconstruct an AI-assisted action end to end.
+- **[TEST-AI-003]** The test suite MUST verify that the LLM cannot bypass Policy Engine decisions through prompt injection, tool misuse, self-declared purpose, self-approval, or fabricated credentials.
+  *Verify:* adversarial prompts fail to expose denied tools, denied data, or denied actions.
+- **[TEST-AI-004]** The test suite MUST verify that human oversight can approve, refuse, override, interrupt, or stop configured high-risk or sensitive actions.
+  *Verify:* a configured overseer action changes the execution outcome and is logged.
+
+#### TEST-LEDGER — Integrity and ledger scenarios
+
+- **[TEST-LEDGER-001]** The test suite MUST verify that no personal data, credential payload, media content, conversation content, tool arguments, tool results, or biometric material is written to the Verana ledger.
+  *Verify:* ledger payload inspection shows only allowed non-reversible digests and non-identifying verification metadata.
+- **[TEST-LEDGER-002]** The test suite MUST verify that tampering with a MessageEntry, external object, reference digest, or batch digest breaks integrity verification.
+  *Verify:* each tampering fixture produces a verification failure.
+- **[TEST-LEDGER-003]** The test suite MUST verify that ledger anchoring remains compatible with crypto-erasure.
+  *Verify:* after erasure, the audit chain verifies while plaintext remains unrecoverable.
