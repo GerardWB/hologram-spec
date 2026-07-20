@@ -6,7 +6,7 @@
 
 The Hologram AI Agent is not the LLM itself.
 
-It is a white-label personal agent and attestation wallet application that can be deployed by an organization, ecosystem operator, service provider, employer, institution, or individual-facing platform for its end users.
+It is a white-label agent instance with an attestation and capability layer application that can be deployed by an organization, ecosystem operator, service provider, employer, institution, or individual-facing platform for its end users.
 
 Each end user receives a personal verifiable agent interface combining:
 
@@ -61,7 +61,7 @@ The main blocks are:
 - Principal;
 - Actor Identity;
 - Backing Identity;
-- Attestation Wallet;
+- Attestation and Capability Layer;
 - Counterparty Agent / Verifiable Service;
 - Conversation Session;
 - Capability Channel;
@@ -267,15 +267,15 @@ This section is the complete, self-contained requirements for the Hologram AI Ag
 
 #### Product, context and compliance
 
-- **Personal Hologram Agent** — the user-facing deployment of the Hologram AI Agent for one Principal, combining messaging, AI assistance, attestations, credentials, memory, approvals, and policy-governed capabilities.
+- **Hologram Agent Instance** — the user-facing deployment of the Hologram AI Agent for one Principal, combining messaging, AI assistance, attestations, credentials, memory, approvals, and policy-governed capabilities.
 
 - **White-label operator** — the organization, ecosystem, platform, service provider, employer, institution, or individual-facing entity deploying the Hologram AI Agent under its own brand, rules, policies, and jurisdiction profile.
 
-- **End user** — the natural person or professional user interacting with a Personal Hologram Agent through a User Front or Verifiable User Agent.
+- **End user** — the natural person or professional user interacting with a Hologram Agent Instance through a User Front or Verifiable User Agent.
 
 - **Counterparty Agent** — another AI agent, service, Verifiable Service, professional agent, organizational service, or third-party actor with which the Hologram AI Agent interacts.
 
-- **Attestation Wallet** — the set of credentials, attestations, proofs, mandates, permissions, role facts, and capability claims available to the Principal and selectively presentable to a counterparty.
+- **Attestation and Capability Layer** — the set of credentials, attestations, proofs, mandates, permissions, role facts, and capability claims available to the Principal and selectively presentable to a counterparty.
 
 - **Conversation context** — the state and history of one conversation session between a Principal and a counterparty or channel.
 
@@ -579,7 +579,7 @@ stateDiagram-v2
 
 ### GOV — Governance, context, jurisdiction and compliance
 
-*Scope:* how the Hologram AI Agent is governed as a white-label personal agent and attestation wallet, how contexts are separated, how jurisdiction and legal roles are declared, and how deterministic policy enforces GDPR, AI Act, security, audit, and business rules before execution.
+*Scope:* how the Hologram AI Agent is governed as a white-label agent instance with an attestation and capability layer, how contexts are separated, how jurisdiction and legal roles are declared, and how deterministic policy enforces GDPR, AI Act, security, audit, and business rules before execution.
 
 The LLM reasons.
 The Policy Engine decides.
@@ -590,7 +590,7 @@ The LLM MUST NOT be the authority for identity, access control, credential valid
 
 #### GOV-PROD — Product and deployment model
 
-- **[GOV-PROD-001]** The specification MUST treat the Hologram AI Agent as a white-label personal agent and attestation wallet application, not as a standalone LLM or generic chatbot.
+- **[GOV-PROD-001]** The specification MUST treat the Hologram AI Agent as a white-label agent instance with an attestation and capability layer application, not as a standalone LLM or generic chatbot.
   *Verify:* the agent-pack and runtime model distinguish the Hologram AI Agent from the LLM runtime and from the User Front.
 - **[GOV-PROD-002]** A deployment MUST identify its white-label operator and the scope of end users or Principals it serves.
   *Verify:* an agent-pack without an operator identity and served-principal scope is rejected or explicitly marked as non-governed.
@@ -1247,7 +1247,7 @@ flowchart LR
 
 ### TEST — Governance and compliance test matrix
 
-*Scope:* how the agent is tested as a governable, jurisdiction-aware, GDPR-ready, AI Act-ready, auditable personal agent and attestation wallet.
+*Scope:* how the agent is tested as a governable, jurisdiction-aware, GDPR-ready, AI Act-ready, auditable agent instance with an attestation and capability layer.
 
 The agent is fully testable only if every action can be replayed against:
 
